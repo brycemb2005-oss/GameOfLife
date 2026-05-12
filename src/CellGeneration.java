@@ -1,19 +1,27 @@
+import java.util.ArrayList;
+
 public class CellGeneration {
 
-    public static void timeShiftRules() {
+    final Universe passUniverse;
 
-        char[][] copy = new char[Universe.rows.size()][Universe.columns];
+    public CellGeneration(Universe passUniverse) {
+        this.passUniverse = passUniverse;
+    }
 
-        for (int i = 0; i < Universe.rows.size(); i++) {
-            for (int j = 0; j < Universe.columns; j++) {
-                copy[i][j] = Universe.cell[i][j];
+    public void timeShiftRules(int[] birth, int[] survive, char cLive, char cDead) {
+
+        char[][] copy = new char[passUniverse.rows.size()][passUniverse.columns];
+
+        for (int i = 0; i < passUniverse.rows.size(); i++) {
+            for (int j = 0; j < passUniverse.columns; j++) {
+                copy[i][j] = passUniverse.cell[i][j];
             }
         }
 
         int count = 0;
 
-        for (int i = 0; i < Universe.rows.size(); i++) {
-            for (int j = 0; j < Universe.columns; j++) {
+        for (int i = 0; i < passUniverse.rows.size(); i++) {
+            for (int j = 0; j < passUniverse.columns; j++) {
 
                 int up = i - 1;
                 int down = i + 1;
@@ -21,56 +29,73 @@ public class CellGeneration {
                 int right = j + 1;
 
                 if (up == -1) {
-                    up = Universe.rows.size() - 1;
+                    up = passUniverse.rows.size() - 1;
                 }
 
-                if (down == Universe.rows.size()) {
+                if (down == passUniverse.rows.size()) {
                     down = 0;
                 }
 
                 if (left == -1) {
-                    left = Universe.columns - 1;
+                    left = passUniverse.columns - 1;
                 }
 
-                if (right == Universe.columns) {
+                if (right == passUniverse.columns) {
                     right = 0;
                 }
 
-                if (copy[up][left] == 'O') {
+                if (copy[up][left] == cLive) {
                     count = count + 1;
                 }
-                if (copy[up][j] == 'O') {
+                if (copy[up][j] == cLive) {
                     count = count + 1;
                 }
-                if (copy[up][right] == 'O') {
+                if (copy[up][right] == cLive) {
                     count = count + 1;
                 }
-                if (copy[i][left] == 'O') {
+                if (copy[i][left] == cLive) {
                     count = count + 1;
                 }
-                if (copy[i][right] == 'O') {
+                if (copy[i][right] == cLive) {
                     count = count + 1;
                 }
-                if (copy[down][left] == 'O') {
+                if (copy[down][left] == cLive) {
                     count = count + 1;
                 }
-                if (copy[down][j] == 'O') {
+                if (copy[down][j] == cLive) {
                     count = count + 1;
                 }
-                if (copy[down][right] == 'O') {
+                if (copy[down][right] == cLive) {
                     count = count + 1;
                 }
-                if (count == 3) {
-                    Universe.cell[i][j] = 'O';
+
+                for (int bnumber : birth) {
+                    if (count == bnumber) {
+                        passUniverse.cell[i][j] = cLive;
+                        break;
+                    }
                 }
-                if (count < 2) {
-                    Universe.cell[i][j] = '.';
+
+                ArrayList<Integer> values = new ArrayList<>();
+
+                for (int amount = 0; amount < 9; amount++) {
+                    values.add(amount);
                 }
-                if (count > 3) {
-                    Universe.cell[i][j] = '.';
+
+                for (int snumber : survive) {
+                    values.remove(Integer.valueOf(snumber));
+                }
+
+                for (int val : values) {
+                    if (count == val) {
+                        passUniverse.cell[i][j] = cDead;
+                        break;
+                    }
                 }
                 count = 0;
             }
         }
     }
 }
+
+
