@@ -9,7 +9,6 @@ public class Conways_Game {
 
         Parser myParser = new Parser();
 
-        // --- Updated: Pass the characters into the Universe constructor ---
         Universe myUniverse = new Universe(myParser.getcLive(), myParser.getcDead());
 
         Scanner sc;
@@ -17,7 +16,7 @@ public class Conways_Game {
         // Fetch the parsed file name from the Parser
         String fileName = myParser.getFile();
 
-        // 3. Input source selection (file vs stdin)
+        // Input source selection (file vs stdin)
         if (fileName != null) {
             File file = new File(fileName);
             sc = new Scanner(file);
@@ -25,8 +24,7 @@ public class Conways_Game {
         } else {
             myUniverse.standardInput();
         }
-
-        // 4. Run simulation
+        
         System.out.println("\nCurrent Cell Layout:");
         myUniverse.printGrid();
 
