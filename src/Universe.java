@@ -7,7 +7,7 @@ class Universe {
     int columns;
     ArrayList<String> rows = new ArrayList<>();
 
-    // --- Added Instance Variables ---
+    // Added Instance Variables
     final char cLive;
     final char cDead;
 
@@ -16,8 +16,9 @@ class Universe {
         this.cDead = cDead;
     }
 
+    // Track the maximum row length
     public void readFile(Scanner sc) {
-        int maxLen = 0; // Track the maximum row length
+        int maxLen = 0;
 
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
@@ -39,7 +40,7 @@ class Universe {
         // Pad shorter rows with cDead to restore stripped trailing spaces
         padRows(maxLen);
 
-        // Safely set columns now that rows are normalized
+        // Safely set columns now that rows are fully implemented
         columns = rows.isEmpty() ? 0 : rows.getFirst().length();
 
         checkColumns();
@@ -86,7 +87,7 @@ class Universe {
         System.out.println("\nGrid successfully loaded.");
     }
 
-    // --- Helper Method to restore dropped trailing spaces ---
+    // Helper Method to restore dropped trailing spaces
     private void padRows(int maxLen) {
         for (int i = 0; i < rows.size(); i++) {
             StringBuilder sb = new StringBuilder(rows.get(i));
@@ -97,7 +98,7 @@ class Universe {
         }
     }
 
-    // --- Helper Method to populate the 2D array ---
+    // Helper Method to populate the 2D array
     private void buildGrid() {
         cell = new char[rows.size()][columns];
         for (int i = 0; i < rows.size(); i++) {
