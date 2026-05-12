@@ -66,13 +66,13 @@ public class Parser {
                 seenG = true;
 
                 if (i + 1 < tokens.length) {
-                    String rule = tokens[i + 1]; // B3/S23
+                    String rule = tokens[i + 1];
 
                     int slashIndex = rule.indexOf("/");
 
                     if (slashIndex != -1) {
-                        String bString = rule.substring(1, slashIndex); // skip 'B'
-                        String sString = rule.substring(slashIndex + 2); // skip 'S'
+                        String bString = rule.substring(1, slashIndex);
+                        String sString = rule.substring(slashIndex + 2);
 
                         this.birth = parseAndRules(bString);
                         this.survive = parseAndRules(sString);
@@ -103,13 +103,11 @@ public class Parser {
 
                     // rebuild full value if quotes got split
                     if (value.equals("\"") && i + 2 < tokens.length) {
-                        value = " " ; // assume this pattern: -d " "
+                        value = " " ;
                     }
 
-                    // strip quotes if they survived
                     value = value.replace("\"", "").replace("'", "");
 
-                    // FINAL RULE
                     if (value.length() == 0 || value.equals(" ")) {
                         this.cLive = ' ';
                     } else {
@@ -141,13 +139,11 @@ public class Parser {
 
                     // rebuild full value if quotes got split
                     if (value.equals("\"") && i + 2 < tokens.length) {
-                        value = " " ; // assume this pattern: -d " "
+                        value = " " ;
                     }
 
-                    // strip quotes if they survived
                     value = value.replace("\"", "").replace("'", "");
 
-                    // FINAL RULE
                     if (value.length() == 0 || value.equals(" ")) {
                         this.cDead = ' ';
                     } else {
@@ -176,7 +172,6 @@ public class Parser {
                 continue;
             }
 
-            // skip rule string or quoted chars
             boolean isRuleString = token.startsWith("B") && token.contains("/");
             boolean isQuoted = token.startsWith("'") || token.startsWith("\"");
 
